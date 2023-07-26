@@ -11,7 +11,6 @@ function Home() {
       const { data } = await axios.get('/api/products')
       setProducts(data)
     }
-    console.log('done')
     fetchProducts()
   }, [])
 
