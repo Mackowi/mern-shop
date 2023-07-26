@@ -1,0 +1,19 @@
+{
+  "name": "mern-shop",
+  "version": "1.0.0",
+  "description": "Mern Shop",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mackowi/mern-shop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mackowi/mern-shop/issues"
+  },
+  "homepage": "https://github.com/Mackowi/mern-shop#readme"
+}
