@@ -14,10 +14,10 @@ const getProducts = asyncHandler(async (req, res) => {
 // access: public
 const getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
-  if (product) {
-    res.json(product)
+  if (!product) {
+    throw new Error('Resource not found')
   }
-  throw new Error('Resource not found')
+  res.json(product)
 })
 
 export { getProducts, getProductById }
