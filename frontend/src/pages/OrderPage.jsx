@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {
-  // useDeliverOrderMutation,
+  useDeliverOrderMutation,
   useGetOrderDetailsQuery,
   useGetPayPalClientIdQuery,
   usePayOrderMutation,
@@ -24,6 +24,9 @@ function OrderPage() {
   } = useGetOrderDetailsQuery(orderId)
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation()
+
+  const [deliverOrder, { isLoading: loadingDeliver }] =
+    useDeliverOrderMutation()
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer()
 
@@ -67,11 +70,6 @@ function OrderPage() {
     })
   }
 
-  async function onApproveTest() {
-    await payOrder({ orderId, details: { payer: {} } })
-    refetch()
-    toast.success('Payment succesfull')
-  }
   function onError(error) {
     toast.error(error.message)
   }
@@ -90,6 +88,11 @@ function OrderPage() {
       .then((orderId) => {
         return orderId
       })
+  }
+
+  const deliverHandler = async () => {
+    await deliverOrder(orderId)
+    refetch()
   }
 
   return isLoading ? (
@@ -229,7 +232,7 @@ function OrderPage() {
                 </ListGroup.Item>
               )}
 
-              {/* {loadingDeliver && <Loader />}
+              {loadingDeliver && <Loader />}
 
               {userInfo &&
                 userInfo.isAdmin &&
@@ -239,12 +242,12 @@ function OrderPage() {
                     <Button
                       type='button'
                       className='btn btn-block'
-                      // onClick={deliverHandler}
+                      onClick={deliverHandler}
                     >
                       Mark As Delivered
                     </Button>
                   </ListGroup.Item>
-                )} */}
+                )}
             </ListGroup>
           </Card>
         </Col>
