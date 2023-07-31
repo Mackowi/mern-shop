@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
-  // useUploadProductImageMutation,
+  useUploadProductImageMutation,
 } from '../../slices/productsApiSlice'
 
 function ProductEditPage() {
@@ -31,6 +31,9 @@ function ProductEditPage() {
 
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation()
+
+  const [uploadProductImage, { isLoading: loadingUpload }] =
+    useUploadProductImageMutation()
 
   const navigate = useNavigate()
 
@@ -66,6 +69,18 @@ function ProductEditPage() {
       toast.error(err?.data?.message || err.error)
     }
   }
+
+  const uploadFileHandler = async (e) => {
+    const formData = new FormData();
+    formData.append('image', e.target.files[0]);
+    try {
+      const res = await uploadProductImage(formData).unwrap();
+      toast.success(res.message);
+      setImage(res.image);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
 
   return (
     <>
@@ -111,10 +126,10 @@ function ProductEditPage() {
               ></Form.Control>
               <Form.Control
                 label='Choose File'
-                // onChange={uploadFileHandler}
+                onChange={uploadFileHandler}
                 type='file'
               ></Form.Control>
-              {/* {loadingUpload && <Loader />} */}
+              {loadingUpload && <Loader />}
             </Form.Group>
 
             <Form.Group controlId='brand'>
