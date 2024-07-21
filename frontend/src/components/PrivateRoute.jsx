@@ -5,6 +5,6 @@ function PrivateRoute() {
   const { userInfo } = useSelector((state) => state.auth)
 
   // replace the past history
-  return userInfo ? <Outlet /> : <Navigate to='login' replace/>
+  return userInfo ? <Outlet /> : <Navigate to='login' replace />
 }
 export default PrivateRoute
